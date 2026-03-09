@@ -8,6 +8,15 @@ return {
     main = 'ibl',
     ---@module 'ibl'
     ---@type ibl.config
-    opts = {},
+    cond = not vim.g.vscode,
+    opts = {
+      indent = {
+        char = '▏', -- thin vertical bar
+      },
+      scope = {
+        enabled = true, -- highlight current scope (function/block)
+        show_start = true,
+      },
+    },
   },
 }

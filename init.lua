@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -279,6 +279,12 @@ require('lazy').setup({
     ---@type Gitsigns.Config
     ---@diagnostic disable-next-line: missing-fields
     opts = {
+      current_line_blame = true,
+      current_line_blame_opts = {
+        delay = 500,
+        virt_text_pos = 'eol',
+      },
+      current_line_blame_formatter = '<author>, <author_time:%d.%m.%Y> • <summary>',
       signs = {
         add = { text = '+' }, ---@diagnostic disable-line: missing-fields
         change = { text = '~' }, ---@diagnostic disable-line: missing-fields
@@ -393,7 +399,15 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        pickers = {
+          buffers = {
+            mappings = {
+              i = {
+                ['<c-d>'] = 'delete_buffer',
+              },
+            },
+          },
+        },
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
         },
@@ -913,10 +927,10 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
