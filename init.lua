@@ -176,7 +176,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.diagnostic.config {
   update_in_insert = false,
   severity_sort = true,
-  float = { border = 'rounded', source = 'if_many' },
+  float = { border = 'rounded', source = 'true' },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
   -- Can switch between these as you prefer
@@ -228,6 +228,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function() vim.hl.on_yank() end,
+})
+
+vim.api.nvim_create_autocmd({ 'FocusLost', 'InsertLeave', 'TextChanged' }, {
+  callback = function()
+    if vim.fn.filereadable(vim.fn.expand '%') == 1 then vim.cmd 'silent! update' end
+  end,
 })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
@@ -619,7 +625,28 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        -- pyright = {
+        --   settings = {
+        --     python = {
+        --       analysis = {
+        --         typeCheckingMode = 'basic',
+        --       },
+        --     },
+        --   },
+        -- },
+        basedpyright = {
+          settings = {
+            basedpyright = {
+              analysis = {
+                typeCheckingMode = 'recommended',
+                -- reportAny = 'none',
+                -- reportUnknownMemberType = 'none',
+                -- reportUnknownVariableType = 'none',
+                -- reportUnusedVariable = 'none',
+              },
+            },
+          },
+        },
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
