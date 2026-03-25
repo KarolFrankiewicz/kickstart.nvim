@@ -951,6 +951,15 @@ require('lazy').setup({
     end,
   },
 
+  {
+    'KarolFrankiewicz/neovim-buffer-sync',
+    config = function()
+      -- Point to the nvim-plugin subdirectory
+      vim.opt.runtimepath:append(vim.fn.stdpath 'data' .. '/lazy/neovim-buffer-sync/nvim-plugin')
+      require('vscode-sync').setup()
+    end,
+  },
+
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
