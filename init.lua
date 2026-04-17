@@ -442,6 +442,26 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader>sa', require('telescope').extensions.live_grep_args.live_grep_args, { desc = '[S]earch by grep (with [A]rgs)' })
+      vim.keymap.set('n', '<leader>sF', function()
+        builtin.find_files {
+          hidden = true, -- show dotfiles
+          find_command = {
+            'rg',
+            '--files',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--no-ignore-vcs', -- ignore .gitignore / .ignore
+            '--hidden', -- include hidden files
+            '--glob',
+            '!.git', -- but still skip .git folder (optional)
+            '!.venv',
+          },
+        }
+      end)
 
       -- This runs on LSP attach per buffer (see main LSP attach function in 'neovim/nvim-lspconfig' config for more info,
       -- it is better explained there). This allows easily switching between pickers if you prefer using something else!
